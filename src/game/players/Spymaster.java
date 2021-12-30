@@ -5,7 +5,7 @@ import game.board.Board;
 import java.util.List;
 
 public abstract class Spymaster {
-    public abstract Clue giveClue(int num);
+    public abstract Clue giveClue(int num) throws Exception;
 
     /**
      * clear previous prints

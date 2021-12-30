@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 
 
-public class MainPMIMatrixGenerator {
+public class PMIGraphMatrixGenerator {
     /**
      * find distance of words from the PMI graph
      * @return map-matrix of distances
@@ -42,10 +42,10 @@ public class MainPMIMatrixGenerator {
         Map<String, Map<String, Double>> distanceMatrix = getPathWeights(args[0]);
         List<String> words = new ArrayList<>(distanceMatrix.keySet());
 
-        System.out.println("Writing distances to file: graph_distance_matrix.csv");
+        System.out.println("Writing distances to file: PMI_graph_matrix.csv");
 
         // write distance matrix to csv file
-        BufferedWriter writer = new BufferedWriter(new FileWriter("graph_distance_matrix.csv"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("PMI_graph_matrix.csv"));
 
         // header
         for (String w: words){

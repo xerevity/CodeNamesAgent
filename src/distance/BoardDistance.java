@@ -57,7 +57,13 @@ public class BoardDistance {
             if (boardWords.contains(word)){
                 Map<String, Double> map = new HashMap<>();
                 for(int i=0; i<elements.length - 1; i++) {
-                    map.put(vocab.get(i), Double.parseDouble(elements[i + 1]));
+                    try {
+                        double dist =  Double.parseDouble(elements[i + 1]);
+                        map.put(vocab.get(i), dist);
+                    } catch (Exception e) {
+                        map.put(vocab.get(i), Double.POSITIVE_INFINITY);
+                    }
+
                 }
                 mapMap.put(word, map);
             }
