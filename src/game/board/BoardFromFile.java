@@ -54,7 +54,7 @@ public class BoardFromFile extends Board{
         while (wordsId != boardId){
             lineWords = brWords.readLine();
             if (lineWords == null) throw new EOFException("BoardID not found in BoardWords input file.");
-            words = lineWords.split(",");
+            words = lineWords.split("[,;]");
             wordsId = Integer.parseInt(words[0]);
         }
 
@@ -64,7 +64,7 @@ public class BoardFromFile extends Board{
         while (colorsId != boardId){
             lineColors = brColors.readLine();
             if (lineColors == null) throw new EOFException("BoardID not found in BoardColors input file.");
-            colors = lineColors.split(",");
+            colors = lineColors.split("[,;]");
             colorsId = Integer.parseInt(colors[0]);
         }
 

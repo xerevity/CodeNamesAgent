@@ -38,7 +38,7 @@ public class SpymasterUser extends Spymaster{
             while (true) {
                 System.out.println("The next spymaster: please type a clue in format <word>,<number> (e.g. dream,3)");
                 input = sc.nextLine();
-                String[] pieces = input.split(",");
+                String[] pieces = input.split("[,;]");
                 clueWord = pieces[0];
                 try {
                     clueNumber = Integer.parseInt(pieces[1]);

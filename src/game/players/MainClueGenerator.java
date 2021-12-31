@@ -24,8 +24,9 @@ public class MainClueGenerator {
             Clue clue12 = master1.giveClue(2);
             Clue clue13 = master1.giveClue(3);
             writer.write("," + clue10.word + "," + clue10.number + ","
-                    + clue12.word + "," + clue12.number + "," + clue13.word + "," + clue13.number
+                    + clue12.word + "," + clue12.number + "," + clue13.word + "," + clue13.number + "\n"
                     );
+            writer.flush();
         }
 
         writer.close();

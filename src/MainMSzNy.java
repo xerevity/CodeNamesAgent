@@ -7,7 +7,7 @@ public class MainMSzNy {
         PlayForSpymasterEvaluation play = new PlayForSpymasterEvaluation(100,
                 "data/generalt_szavak.csv",
                 "data/generalt_szinek.csv",
-                "data/generalt_utalasok.csv"
+                "data/generalt_utalasok_pot.csv"
         );
 
         play.play();

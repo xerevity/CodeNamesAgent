@@ -18,7 +18,7 @@ public class SpymasterFromFile extends Spymaster{
         Map<Integer, List<Clue>> cluesMap = new HashMap<>();
 
         while(line != null) {
-            String[] elements = line.split(";");
+            String[] elements = line.split("[,;]");
             List<Clue> row = new ArrayList<>();
 
             int id = Integer.parseInt(elements[0]);
