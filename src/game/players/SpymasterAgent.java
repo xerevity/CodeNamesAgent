@@ -4,7 +4,6 @@ import distance.BoardDistance;
 import game.board.Board;
 import game.board.Card;
 
-import java.io.IOException;
 import java.util.*;
 
 public class SpymasterAgent extends Spymaster{
@@ -14,9 +13,9 @@ public class SpymasterAgent extends Spymaster{
     private final String scoreFunction;
     private final List<String> used;
 
-    public SpymasterAgent(BoardDistance bd, Board board, int team, String scoreFunction) throws IOException {
+    public SpymasterAgent(BoardDistance bd, Board board, int team, String scoreFunction) {
         this.board = board;
-        this.distances = bd.getBoardDistances(board.getWords());
+        this.distances = bd.getBoardDistances();
         this.team = team;
         this.scoreFunction = scoreFunction;
         this.used = new ArrayList<>();

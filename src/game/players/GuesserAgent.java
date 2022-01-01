@@ -4,7 +4,6 @@ import distance.BoardDistance;
 import game.board.Board;
 import game.board.Card;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 
@@ -12,9 +11,9 @@ public class GuesserAgent extends Guesser{
     private final Board board;
     private final Map<String, Map<String , Double>> distances;
 
-    public GuesserAgent(BoardDistance bd, Board board) throws IOException {
+    public GuesserAgent(BoardDistance bd, Board board) {
         this.board = board;
-        this.distances = bd.getBoardDistances(board.getWords());
+        this.distances = bd.getBoardDistances();
     }
 
     @Override

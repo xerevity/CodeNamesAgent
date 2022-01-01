@@ -1,6 +1,6 @@
 package game.players;
 
-import distance.BoardDistance;
+import distance.*;
 import game.board.Board;
 import game.board.BoardFromFile;
 
@@ -10,12 +10,12 @@ public class MainClueGenerator {
     public static void main(String[] args) throws Exception {
 
         BufferedWriter writer = new BufferedWriter(new FileWriter("generated.csv"));
-        BoardDistance bd = new BoardDistance("data/inverse_PMI_matrix.csv");
 
         for (int i=0; i<100; i++){
             writer.write(i+"");
 
             Board board = new BoardFromFile(i, "data/generalt_szavak.csv", "data/generalt_szinek.csv");
+            BoardDistance bd = new BoardDistanceFromFile("data/inverse_PMI_matrix.csv", board.getWords());
 
             int team = 2;
             Spymaster master1 = new SpymasterAgent(bd, board, team, "scoreRatio");
