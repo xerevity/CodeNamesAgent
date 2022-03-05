@@ -7,11 +7,11 @@ import game.board.Card;
 import java.util.Map;
 import java.util.Random;
 
-public class GuesserAgent extends Guesser{
+public class GuesserAgentDist extends Guesser{
     private final Board board;
     private final Map<String, Map<String , Double>> distances;
 
-    public GuesserAgent(BoardDistance bd, Board board) {
+    public GuesserAgentDist(BoardDistance bd, Board board) {
         this.board = board;
         this.distances = bd.getBoardDistances();
     }

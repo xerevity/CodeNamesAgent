@@ -6,14 +6,14 @@ import game.board.Card;
 
 import java.util.*;
 
-public class SpymasterAgent extends Spymaster{
+public class SpymasterAgentDist extends Spymaster{
     private final Board board;
     private final Map<String, Map<String, Double>> distances;
     private final int team;
     private final String scoreFunction;
     private final List<String> used;
 
-    public SpymasterAgent(BoardDistance bd, Board board, int team, String scoreFunction) {
+    public SpymasterAgentDist(BoardDistance bd, Board board, int team, String scoreFunction) {
         this.board = board;
         this.distances = bd.getBoardDistances();
         this.team = team;
@@ -141,12 +141,85 @@ public class SpymasterAgent extends Spymaster{
         return wordScores;
     }
 
+    /**
+     * map a score and a number to each possible word in the vocab,
+     * based on similarity to the clue word,
+     * @param num number of targeted board words, -1 if unspecified
+     * @return a map with each word to [score, matching number]
+     */
+    private Map<String, Double[]> scoreKoyyalagunta(int num, double lambda){
+        Map<String, Double[]> wordScores = new HashMap<>();
+
+        // go over all vocab words as possible clue word
+        for (Map.Entry<String, Map<String, Double>> entry : distances.entrySet()) {
+            String word = entry.getKey();
+            Map<String, Double> distanceMap = entry.getValue();
+
+            // for each possible clue word, find the minimal distance of bad words,
+            // and the distances of good words
+            List<Double> goodWordsDistances = new LinkedList<>();
+            Double minBadDistance = Double.POSITIVE_INFINITY;
+
+            for (Card card : board.getCards()){
+                if (!card.isRevealed()) {
+                    String cardWord = card.getWord();
+                    if (card.getColor() == team) {
+                        goodWordsDistances.add((distanceMap.get(cardWord) == null) ? Double.POSITIVE_INFINITY : distanceMap.get(cardWord));
+                    }
+                    else if (distanceMap.get(cardWord) != null && minBadDistance > distanceMap.get(cardWord))
+                        minBadDistance = distanceMap.get(cardWord);
+                }
+            }
+
+            Double finalMinBadDistance = minBadDistance;
+            goodWordsDistances.removeIf(dist -> dist > finalMinBadDistance);
+
+            double score = 0.0;
+            int number;
+
+            if (num == -1){
+                // score function:
+                // (the sum of 1 - good distances) - lambda x (1 - minBadDistance)
+
+                number = goodWordsDistances.size();
+                for (Double dist : goodWordsDistances)
+                    score += dist;
+
+                score -= lambda * (1 - minBadDistance);
+
+            } else {
+                // score function:
+                // lambda x minBadDistance - (the sum of n smallest good distances)
+
+                Collections.sort(goodWordsDistances);
+                number = Math.min(num, goodWordsDistances.size());
+
+                for (int i=0; i<number; i++)
+                    score += 1 - goodWordsDistances.get(i);
+
+                score -= lambda * (1 - minBadDistance);
+
+            }
+
+            wordScores.put(word, new Double[] {score, (double) number});
+        }
+
+        return wordScores;
+    }
+
+
     @Override
     public Clue giveClue(int num) {
         // remove board words from possible clue words
         for (String word : board.getWords()) distances.remove(word);
 
-        Map<String, Double[]> clueMap = scoreFunction.equals("scoreRatio") ? scoreRatio(num) : scoreDifference(num);
+        Map<String, Double[]> clueMap = switch (scoreFunction) {
+            case "scoreRatio" -> scoreRatio(num);
+            case "scoreDifference" -> scoreDifference(num);
+            case "scoreKoyyalagunta" -> scoreKoyyalagunta(num, 0.5);
+            default -> null;
+        };
+        assert clueMap != null;
 
         // return the word with the best score and the matching number
         String bestWord = null;

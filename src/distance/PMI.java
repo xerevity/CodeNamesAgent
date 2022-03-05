@@ -59,7 +59,7 @@ public class PMI {
                 g.addVertex(word2);
                 DefaultWeightedEdge e = g.addEdge(word1, word2);
                 // e == null if the edge already exists
-                if (e != null) g.setEdgeWeight(e, 1 / pmi);
+                if (e != null) g.setEdgeWeight(e, 1 - java.lang.Math.sqrt(pmi));
             }
 
             row = br.readLine();

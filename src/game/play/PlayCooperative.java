@@ -13,9 +13,12 @@ public class PlayCooperative extends Play{
     private final Guesser guesser;
     private final int team;
     private final Board board;
+    private int clueNum;
 
-    public PlayCooperative(Board board, BoardDistance bd) throws Exception {
+    public PlayCooperative(Board board, BoardDistance bd, String scoreFunction, int clueNum) throws Exception {
         this.board = board;
+        this.clueNum = clueNum;
+
         List<String> vocab = bd.getVocab();
 
         // check if board is correct
@@ -37,13 +40,13 @@ public class PlayCooperative extends Play{
             option = sc.nextLine();
         }
 
-        this.spymaster = option.equals("1") ?  new SpymasterAgent(bd, board, team, "scoreRatio") : new SpymasterUser(board, vocab);
-        this.guesser = option.equals("1") ? new GuesserUser(board) : new GuesserAgent(bd, board);
+        this.spymaster = option.equals("1") ?  new SpymasterAgentSim(bd, board, team, scoreFunction) : new SpymasterUser(board, vocab);
+        this.guesser = option.equals("1") ? new GuesserUser(board) : new GuesserAgentDist(bd, board);
     }
 
     public void play() throws Exception {
         do {
-            Clue clue = spymaster.giveClue(-1);
+            Clue clue = spymaster.giveClue(clueNum);
             guesserRound(clue, guesser, board, team);
         } while (!super.end);
     }

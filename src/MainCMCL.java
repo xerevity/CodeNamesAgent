@@ -2,12 +2,12 @@ import game.play.PlayForSpymasterEvaluation;
 
 import java.util.Scanner;
 
-public class MainMSzNy {
+public class MainCMCL {
     public static void main(String[] args) throws Exception {
         PlayForSpymasterEvaluation play = new PlayForSpymasterEvaluation(100,
-                "data/generalt_szavak.csv",
-                "data/generalt_szinek.csv",
-                "data/generalt_utalasok_pot.csv"
+                "data/english/boards_en.csv",
+                "data/english/board_colors.csv",
+                "data/english/clues.csv"
         );
 
         play.play();

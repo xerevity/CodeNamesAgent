@@ -18,7 +18,7 @@ public class MainClueGenerator {
             BoardDistance bd = new BoardDistanceFromFile("data/inverse_PMI_matrix.csv", board.getWords());
 
             int team = 2;
-            Spymaster master1 = new SpymasterAgent(bd, board, team, "scoreRatio");
+            Spymaster master1 = new SpymasterAgentDist(bd, board, team, "scoreRatio");
 
             Clue clue10 = master1.giveClue(-1);
             Clue clue12 = master1.giveClue(2);
