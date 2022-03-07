@@ -44,13 +44,14 @@ public class BoardDistanceFromMatrix extends BoardDistance{
     private Map<String, Map<String, Double>>  setBoardDistances() throws IOException {
 
         Map<String, Map<String, Double>> mapMap = distanceMatrix.getMatrix();
+        Map<String, Map<String, Double>> boardMap = new HashMap<>();
         for (String word: mapMap.keySet()){
-            if (!boardWords.contains(word)) {
-                mapMap.remove(word);
+            if (boardWords.contains(word)) {
+                boardMap.put(word, mapMap.get(word));
             }
         }
 
-        if (mapMap.size() != boardWords.size()) {
+        if (boardMap.size() != boardWords.size()) {
             throw new EOFException("Not all board words are in the word distance matrix!");
         }
 
@@ -61,7 +62,7 @@ public class BoardDistanceFromMatrix extends BoardDistance{
         }
 
         for (String boardWord : boardWords){
-            for (Map.Entry<String, Double> entry : (mapMap.get(boardWord)).entrySet()){
+            for (Map.Entry<String, Double> entry : (boardMap.get(boardWord)).entrySet()){
                 String word = entry.getKey();
                 Double distance = entry.getValue();
                 (boardDistances.get(word)).put(boardWord, distance);
