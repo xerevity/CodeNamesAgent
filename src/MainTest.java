@@ -7,17 +7,25 @@ import game.players.*;
 public class MainTest {
     public static void main(String[] args) throws Exception {
 
-        Board board = new BoardFromFile(50, "data/hungarian/cmcl/boards_hu.csv", "data/hungarian/cmcl/board_colors.csv");
+        Board board = new BoardFromFile(50, "data/english/eval_data/boards_en.csv", "data/english/eval_data/board_colors.csv");
         board.printForGuessers();
         board.printForSpymasters();
 
         ColorCounts cc = new ColorCounts(10,10,0,0,0);
-        board = new BoardRandom("data/hungarian/cmcl/board_words_hu.txt", cc);
+        board = new BoardRandom("data/english/all_board_words_en.txt", cc);
 
         board.printForGuessers();
         board.printForSpymasters();
 
-        BoardDistance bd = new BoardDistanceFromFile("/Volumes/my_passport/codenames/hungarian/huweb_normpmi_graph_sim.csv", board.getWords());
+        DistanceMatrix dm = new DistanceMatrix("/Users/reka/small/codenames_normpmi_sqrt_small.csv");
+        BoardDistance bd = new BoardDistanceFromMatrix(dm, board.getWords());
+        board = new BoardRandom("data/english/all_board_words_en.txt", cc);
+        bd = new BoardDistanceFromMatrix(dm, board.getWords());
+        board = new BoardRandom("data/english/all_board_words_en.txt", cc);
+        bd = new BoardDistanceFromMatrix(dm, board.getWords());
+        board = new BoardRandom("data/english/all_board_words_en.txt", cc);
+        bd = new BoardDistanceFromMatrix(dm, board.getWords());
+        board = new BoardRandom("data/english/all_board_words_en.txt", cc);
 
         Guesser guesser = new GuesserAgentSim(bd, board);
         Spymaster master = new SpymasterAgentSim(bd, board, 2, "scoreHarmonic");

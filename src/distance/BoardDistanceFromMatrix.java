@@ -52,6 +52,11 @@ public class BoardDistanceFromMatrix extends BoardDistance{
         }
 
         if (boardMap.size() != boardWords.size()) {
+            for (String word: boardWords){
+                if (!boardMap.containsKey(word)){
+                    System.err.println(word);
+                }
+            }
             throw new EOFException("Not all board words are in the word distance matrix!");
         }
 
