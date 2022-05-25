@@ -24,6 +24,10 @@ public class DistanceMatrix {
         return vocab;
     }
 
+    public List<String> getTargetWords() {
+        return new ArrayList<>(matrix.keySet());
+    }
+
     /**
      * read the header of the distance matrix file
      * @return List of all words

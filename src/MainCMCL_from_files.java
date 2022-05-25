@@ -2,7 +2,7 @@ import game.play.PlayForSpymasterEvaluation;
 
 import java.util.Scanner;
 
-public class MainCMCL {
+public class MainCMCL_from_files {
     public static void main(String[] args) throws Exception {
         PlayForSpymasterEvaluation play = new PlayForSpymasterEvaluation(100,
                 "data/english/boards_en.csv",

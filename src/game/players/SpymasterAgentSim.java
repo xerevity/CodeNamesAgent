@@ -33,7 +33,7 @@ public class SpymasterAgentSim extends Spymaster{
     }
 
     @Override
-    public Clue giveClue(int num) {
+    public Clue giveClue(int num) throws Exception {
 
         Map<String, Double[]> clueMap = switch (scoreFunction) {
             case "scoreKoyyalagunta" -> scoreKoyyalagunta(num, 0.5);
@@ -42,7 +42,9 @@ public class SpymasterAgentSim extends Spymaster{
             case "scoreHarmonicDivide" -> scoreHarmonicDivide(num, num);
             default -> null;
         };
-        assert clueMap != null;
+        if (clueMap == null) {
+            throw new Exception("Invalid scoring function!");
+        }
 
         // return the word with the best score and the matching number
         String bestWord = null;

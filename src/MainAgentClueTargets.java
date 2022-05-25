@@ -9,15 +9,27 @@ import java.io.FileWriter;
 
 public class MainAgentClueTargets {
     public static void main(String[] args) throws Exception {
+        String boardsWordsFile;
+        String boardsColorsFile;
+        String distancesFile;
 
-        BufferedWriter bw = new BufferedWriter(new FileWriter("graph_en.csv"));
+        try {
+            boardsWordsFile = args[0];
+            boardsColorsFile = args[1];
+            distancesFile = args[2];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println("Required arguments are: [board words csv] [board colors csv] [distance matrix file]");
+            throw new Exception("Some of the arguments are missing!");
+        }
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter("clues_generated.csv"));
 
         for (int i=0; i<100; i++){
 
-            Board board = new BoardFromFile(i, "data/english/boards_en.csv", "data/english/board_colors.csv");
+            Board board = new BoardFromFile(i, boardsWordsFile, boardsColorsFile);
             board.printForSpymasters();
 
-            BoardDistance bd = new BoardDistanceFromFile("/Volumes/my_passport/codenames/english/codenames_normpmi_graph_sim.csv", board.getWords());
+            BoardDistance bd = new BoardDistanceFromFile(distancesFile, board.getWords());
             Spymaster spymaster1 = new SpymasterAgentSim(bd, board, 2, "scoreKoyyalagunta");
             Spymaster spymaster2 = new SpymasterAgentSim(bd, board, 2, "scoreKoyyalaguntaRestrict");
             Spymaster spymaster3 = new SpymasterAgentSim(bd, board, 2, "scoreHarmonic");
